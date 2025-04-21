@@ -1,10 +1,12 @@
 
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import { useNavigate, useLocation } from "react-router-dom";
 
 interface NavLink {
   name: string;
   href: string;
+  isPage?: boolean;
 }
 
 const navLinks: NavLink[] = [
@@ -14,45 +16,64 @@ const navLinks: NavLink[] = [
   { name: "Testimonials", href: "#testimonials" },
   { name: "Pricing", href: "#pricing" },
   { name: "Ask AI", href: "#ask-ai" },
+  { name: "All Courses", href: "/courses", isPage: true },
+  { name: "AI Assistant", href: "/ai-assistant", isPage: true },
 ];
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleScroll = () => {
       // Check if page is scrolled
       setIsScrolled(window.scrollY > 10);
       
-      // Set active section based on scroll position
-      const sections = navLinks.map(link => link.href.substring(1));
-      const currentSection = sections.find(section => {
-        const element = document.getElementById(section);
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          return rect.top <= 100 && rect.bottom >= 100;
+      // Only track sections on the homepage
+      if (location.pathname === '/') {
+        // Set active section based on scroll position
+        const sections = navLinks
+          .filter(link => !link.isPage)
+          .map(link => link.href.substring(1));
+          
+        const currentSection = sections.find(section => {
+          const element = document.getElementById(section);
+          if (element) {
+            const rect = element.getBoundingClientRect();
+            return rect.top <= 100 && rect.bottom >= 100;
+          }
+          return false;
+        });
+        
+        if (currentSection) {
+          setActiveSection(currentSection);
         }
-        return false;
-      });
-      
-      if (currentSection) {
-        setActiveSection(currentSection);
       }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [location.pathname]);
 
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      window.scrollTo({
-        top: element.offsetTop - 80, // Offset for navbar height
-        behavior: "smooth",
-      });
+  const handleNavigation = (link: NavLink) => {
+    if (link.isPage) {
+      navigate(link.href);
+    } else if (location.pathname === '/') {
+      // If we're on the homepage, scroll to the section
+      const sectionId = link.href.substring(1);
+      const element = document.getElementById(sectionId);
+      if (element) {
+        window.scrollTo({
+          top: element.offsetTop - 80,
+          behavior: "smooth",
+        });
+      }
+    } else {
+      // If we're not on the homepage, navigate there and then scroll
+      navigate('/', { state: { scrollToId: link.href.substring(1) } });
     }
     
     // Close mobile menu when clicking a link
@@ -75,7 +96,7 @@ const Navbar = () => {
             className="text-2xl font-bold text-sat-primary"
             onClick={(e) => {
               e.preventDefault();
-              scrollToSection("home");
+              navigate('/');
             }}
           >
             SAT Genius
@@ -84,17 +105,19 @@ const Navbar = () => {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex space-x-6">
-          {navLinks.map((link) => (
+          {navLinks.filter(link => location.pathname === '/' ? !link.isPage : link.isPage).map((link) => (
             <a
               key={link.name}
               href={link.href}
               onClick={(e) => {
                 e.preventDefault();
-                scrollToSection(link.href.substring(1));
+                handleNavigation(link);
               }}
               className={cn(
                 "transition-colors duration-300 font-medium",
-                activeSection === link.href.substring(1)
+                location.pathname === '/' && activeSection === link.href.substring(1)
+                  ? "text-sat-primary border-b-2 border-sat-primary"
+                  : location.pathname === link.href
                   ? "text-sat-primary border-b-2 border-sat-primary"
                   : "text-gray-700 hover:text-sat-primary"
               )}
@@ -131,11 +154,13 @@ const Navbar = () => {
                 href={link.href}
                 onClick={(e) => {
                   e.preventDefault();
-                  scrollToSection(link.href.substring(1));
+                  handleNavigation(link);
                 }}
                 className={cn(
                   "block py-2 transition-colors duration-300",
-                  activeSection === link.href.substring(1)
+                  location.pathname === '/' && activeSection === link.href.substring(1)
+                    ? "text-sat-primary font-medium"
+                    : location.pathname === link.href
                     ? "text-sat-primary font-medium"
                     : "text-gray-700"
                 )}

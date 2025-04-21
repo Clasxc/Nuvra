@@ -1,8 +1,11 @@
 
 import { cn } from "@/lib/utils";
 import FadeInSection from "./FadeInSection";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+
   return (
     <section 
       id="home" 
@@ -23,26 +26,26 @@ const HeroSection = () => {
                 Combining expert tutors with cutting-edge AI to deliver personalized learning experiences that help students excel in high-stakes exams.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <a 
-                  href="#courses" 
+                <button 
                   className={cn(
                     "px-8 py-3 bg-sat-primary text-white rounded-full",
                     "font-semibold text-center transition-all duration-300",
                     "hover:bg-sat-secondary hover:shadow-lg"
                   )}
+                  onClick={() => navigate('/courses')}
                 >
                   Explore Courses
-                </a>
-                <a 
-                  href="#ask-ai" 
+                </button>
+                <button 
                   className={cn(
                     "px-8 py-3 border-2 border-sat-primary text-sat-primary rounded-full",
                     "font-semibold text-center transition-all duration-300",
                     "hover:bg-sat-accent hover:border-sat-secondary hover:text-sat-secondary"
                   )}
+                  onClick={() => navigate('/ai-assistant')}
                 >
                   Try AI Assistant
-                </a>
+                </button>
               </div>
             </FadeInSection>
           </div>

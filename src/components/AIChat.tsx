@@ -1,15 +1,29 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Bot } from "lucide-react";
 import { Button } from "./ui/button";
 import { Textarea } from "./ui/textarea";
 import { toast } from "sonner";
 
-export const AIChat = () => {
+interface AIChatProps {
+  guestMode?: boolean;
+  maxQuestions?: number;
+}
+
+export const AIChat = ({ guestMode = false, maxQuestions = Infinity }: AIChatProps) => {
   const [apiKey, setApiKey] = useState(localStorage.getItem("geminiApiKey") || "");
   const [message, setMessage] = useState("");
   const [response, setResponse] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [questionsAsked, setQuestionsAsked] = useState(0);
+
+  useEffect(() => {
+    // Reset questions asked count when component mounts
+    if (guestMode) {
+      const storedCount = Number(localStorage.getItem("guestQuestionsAsked") || "0");
+      setQuestionsAsked(storedCount);
+    }
+  }, [guestMode]);
 
   const saveApiKey = (key: string) => {
     setApiKey(key);
@@ -24,6 +38,11 @@ export const AIChat = () => {
       return;
     }
     if (!message.trim()) return;
+
+    if (guestMode && questionsAsked >= maxQuestions) {
+      toast.error(`You've reached your limit of ${maxQuestions} questions. Please sign up for unlimited access.`);
+      return;
+    }
 
     setIsLoading(true);
     try {
@@ -48,6 +67,12 @@ export const AIChat = () => {
 
       const data = await response.json();
       setResponse(data.candidates[0].content.parts[0].text);
+      
+      if (guestMode) {
+        const newCount = questionsAsked + 1;
+        setQuestionsAsked(newCount);
+        localStorage.setItem("guestQuestionsAsked", newCount.toString());
+      }
     } catch (error) {
       console.error("Error:", error);
       toast.error("Failed to get response from AI");
@@ -57,7 +82,7 @@ export const AIChat = () => {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto p-4 space-y-4">
+    <div className="w-full max-w-2xl mx-auto p-4 space-y-4 bg-white rounded-xl shadow-md">
       {!apiKey && (
         <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
           <h3 className="font-medium text-yellow-800 mb-2">API Key Required</h3>
@@ -73,6 +98,14 @@ export const AIChat = () => {
         </div>
       )}
 
+      {guestMode && (
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+          <p className="text-sm text-blue-800">
+            <span className="font-medium">Guest Mode:</span> You have used {questionsAsked} of {maxQuestions} questions.
+          </p>
+        </div>
+      )}
+
       <form onSubmit={handleSubmit} className="space-y-4">
         <Textarea
           placeholder="Ask me anything about your studies..."
@@ -82,7 +115,7 @@ export const AIChat = () => {
         />
         <Button 
           type="submit" 
-          disabled={isLoading || !message.trim()}
+          disabled={isLoading || !message.trim() || (guestMode && questionsAsked >= maxQuestions)}
           className="w-full flex items-center justify-center gap-2"
         >
           <Bot className="w-4 h-4" />
