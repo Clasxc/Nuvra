@@ -1,8 +1,8 @@
 
 import { createClient } from "@supabase/supabase-js";
 
-// You must add your Supabase URL and public (anon) key here.
-const SUPABASE_URL = "YOUR_SUPABASE_URL"; // <-- Replace this
-const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY"; // <-- Replace this
+// The URL must be in a valid format, even for placeholders
+const SUPABASE_URL = "https://your-project-id.supabase.co";
+const SUPABASE_ANON_KEY = "your-anon-key";
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
