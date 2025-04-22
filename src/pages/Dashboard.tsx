@@ -12,7 +12,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Book, CalendarDays, Progress as ProgressIcon } from "lucide-react";
+import { Book, CalendarDays, Activity } from "lucide-react";
 
 interface Course {
   id: string;
@@ -89,7 +89,7 @@ const Dashboard = () => {
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
                   <span>{course.title}</span>
-                  <ProgressIcon className="h-5 w-5 text-gray-400" />
+                  <Activity className="h-5 w-5 text-gray-400" />
                 </CardTitle>
               </CardHeader>
               <CardContent>
