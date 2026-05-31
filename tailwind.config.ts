@@ -53,10 +53,10 @@ export default {
 					foreground: 'hsl(var(--card-foreground))'
 				},
 				sat: {
-					primary: '#3b82f6', // blue-500
-					secondary: '#1e40af', // blue-800
-					accent: '#dbeafe', // blue-100
-					highlight: '#60a5fa', // blue-400
+					primary: '#4F46E5', // indigo-600
+					secondary: '#3730A3', // indigo-800
+					accent: '#E0E7FF', // indigo-100
+					highlight: '#818CF8', // indigo-400
 				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
@@ -127,5 +127,5 @@ export default {
 			}
 		}
 	},
-	plugins: [require("tailwindcss-animate")],
+	plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 } satisfies Config;

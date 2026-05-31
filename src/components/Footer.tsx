@@ -1,5 +1,6 @@
 
 import { cn } from "@/lib/utils";
+import Logo from "@/components/Logo";
 
 const Footer = () => {
   return (
@@ -7,7 +8,10 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
           <div>
-            <h3 className="text-xl font-bold mb-4">SAT Genius</h3>
+            <div className="inline-flex items-center gap-2 mb-4">
+              <Logo size={28} />
+              <h3 className="text-xl font-bold">NUVRA</h3>
+            </div>
             <p className="text-gray-400 mb-4">
               Combining expert tutors with AI technology to deliver personalized learning experiences.
             </p>
@@ -96,7 +100,7 @@ const Footer = () => {
         <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm mb-4 md:mb-0">
-              &copy; {new Date().getFullYear()} SAT Genius. All rights reserved.
+              &copy; {new Date().getFullYear()} NUVRA. All rights reserved.
             </p>
             <div className="flex space-x-6">
               <a href="#" className="text-gray-400 hover:text-white text-sm">

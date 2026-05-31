@@ -18,7 +18,7 @@ const testimonials: Testimonial[] = [
     name: "Emily Chen",
     role: "SAT Student",
     image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-    content: "SAT Genius transformed my SAT prep experience. The combination of my tutor Sarah and the 24/7 AI help made a huge difference. I could practice any time and get immediate feedback.",
+    content: "NUVRA transformed my SAT prep experience. The combination of my tutor Sarah and the 24/7 AI help made a huge difference. I could practice any time and get immediate feedback.",
     improvement: "SAT Score: 1280 → 1520"
   },
   {
@@ -34,7 +34,7 @@ const testimonials: Testimonial[] = [
     name: "Sophia Rodriguez",
     role: "Calculus Student",
     image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=761&q=80",
-    content: "I was struggling with Calculus until I found SAT Genius. Being able to upload my textbook and ask the AI specific questions about problems I was stuck on was a game-changer.",
+    content: "I was struggling with Calculus until I found NUVRA. Being able to upload my textbook and ask the AI specific questions about problems I was stuck on was a game-changer.",
     improvement: "Grade: C- → A"
   },
   {
@@ -67,7 +67,7 @@ const TestimonialsSection = () => {
               Student <span className="text-sat-primary">Success Stories</span>
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Hear from our students who have achieved remarkable results with SAT Genius.
+              Hear from our students who have achieved remarkable results with NUVRA.
             </p>
           </div>
         </FadeInSection>
@@ -76,7 +76,7 @@ const TestimonialsSection = () => {
         <div className="hidden lg:grid grid-cols-2 gap-8">
           {testimonials.map((testimonial, index) => (
             <FadeInSection key={testimonial.id} delay={index * 100}>
-              <div className="bg-blue-50 rounded-xl p-8 shadow-md hover:shadow-lg transition-shadow">
+              <div className="bg-indigo-50 rounded-xl p-8 shadow-md hover:shadow-lg transition-shadow">
                 <div className="flex items-start mb-6">
                   <img
                     src={testimonial.image}
@@ -100,7 +100,7 @@ const TestimonialsSection = () => {
         {/* Mobile Testimonials Carousel */}
         <div className="lg:hidden">
           <FadeInSection>
-            <div className="relative bg-blue-50 rounded-xl p-8 shadow-md">
+            <div className="relative bg-indigo-50 rounded-xl p-8 shadow-md">
               <div className="flex items-start mb-6">
                 <img
                   src={testimonials[activeIndex].image}

@@ -28,12 +28,12 @@ const Feature = ({ icon, title, description, delay = 0 }: FeatureProps) => {
 
 const WhyUsSection = () => {
   return (
-    <section id="why-us" className="py-20 bg-blue-50">
+    <section id="why-us" className="py-20 bg-indigo-50">
       <div className="container mx-auto px-4">
         <FadeInSection>
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-              Why Choose <span className="text-sat-primary">SAT Genius</span>
+              Why Choose <span className="text-sat-primary">NUVRA</span>
             </h2>
             <p className="text-lg text-gray-600 max-w-3xl mx-auto">
               Our unique approach combines the best of human teaching with cutting-edge AI technology
@@ -83,7 +83,7 @@ const WhyUsSection = () => {
               <div className="p-8 lg:p-12">
                 <h3 className="text-2xl font-bold text-gray-800 mb-4">Our AI Advantage</h3>
                 <p className="text-gray-600 mb-6">
-                  SAT Genius uses cutting-edge AI (Gemini + LangChain) with Retrieval-Augmented Generation (RAG) to provide
+                  NUVRA uses cutting-edge AI (Gemini + RAG) to provide
                   precise, contextual answers to your questions at any time.
                 </p>
                 <ul className="space-y-3">
